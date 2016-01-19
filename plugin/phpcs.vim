@@ -52,16 +52,16 @@ endif
 function! s:CodeSniff(extraarg)
     set errorformat+=\"%f\"\\,%l\\,%c\\,%t%*[a-zA-Z]\\,\"%m\"\\,%*[a-zA-Z0-9_.-\\,]
     let l:extraarg       = a:extraarg.' '.g:Vimphpcs_ExtraArgs
-	let l:filename       = @%
+    let l:filename       = @%
     let l:phpcs_cmd      = g:Vimphpcs_Phpcscmd
     let l:phpcs_standard = g:Vimphpcs_Standard
     let l:phpcs_opts     = ' '.l:extraarg.' --report=csv --standard='.l:phpcs_standard
-	let l:phpcs_output   = system(l:phpcs_cmd.l:phpcs_opts.' '.l:filename)
+    let l:phpcs_output   = system(l:phpcs_cmd.l:phpcs_opts.' '.l:filename)
     let l:phpcs_output   = substitute(l:phpcs_output, '\\"', "'", 'g')
-	let l:phpcs_results  = split(l:phpcs_output, "\n")
-	unlet l:phpcs_results[0]
-	cexpr l:phpcs_results
-	copen
+    let l:phpcs_results  = split(l:phpcs_output, "\n")
+    unlet l:phpcs_results[0]
+    cexpr l:phpcs_results
+    copen
 endfunction
 
 command! CodeSniff :call <SID>CodeSniff('')
