@@ -52,7 +52,11 @@ endif
 function! s:CodeSniff(extraarg)
     set errorformat+=\"%f\"\\,%l\\,%c\\,%t%*[a-zA-Z]\\,\"%m\"\\,%*[a-zA-Z0-9_.-\\,]
     let l:extraarg       = a:extraarg.' '.g:Vimphpcs_ExtraArgs
-    let l:filename       = @%
+    if exists('g:Vimphpcs_Source') && !empty(g:Vimphpcs_Source)
+        let l:filename   = g:Vimphpcs_Source
+    else
+        let l:filename   = @%
+    endif
     let l:phpcs_cmd      = g:Vimphpcs_Phpcscmd
     let l:phpcs_standard = g:Vimphpcs_Standard
     let l:phpcs_opts     = ' '.l:extraarg.' --report=csv --standard='.l:phpcs_standard
